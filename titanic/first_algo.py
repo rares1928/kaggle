@@ -43,5 +43,7 @@ x_test = x_test.select_dtypes(exclude=['number']).apply(LabelEncoder().fit_trans
 model = LogisticRegression()
 model.fit(x_train, y_train)
 y_test = model.predict(x_test)
-y_test = pd.concat([y_test, df_test['PassengerId'].rename('PassengerId')], axis=1)
-y_test.to_csv(f'data/predictions.csv')
+df_test['Survived'] = y_test
+print(df_test)
+predictions = df_test[['PassengerId', 'Survived']]
+predictions.to_csv(f'data/predictions.csv')
