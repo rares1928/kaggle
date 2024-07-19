@@ -40,10 +40,9 @@ x_train = x_train.select_dtypes(exclude=['number']).apply(LabelEncoder().fit_tra
 x_test = preprocess(df_test, 'parsed_test')
 x_test = x_test.select_dtypes(exclude=['number']).apply(LabelEncoder().fit_transform).join(x_test.select_dtypes(include=['number']))
 
-model = LogisticRegression()
+model = LogisticRegression(max_iter=1000)
 model.fit(x_train, y_train)
 y_test = model.predict(x_test)
 df_test['Survived'] = y_test
-print(df_test)
 predictions = df_test[['PassengerId', 'Survived']]
-predictions.to_csv(f'data/predictions.csv')
+predictions.to_csv(f'data/predictions.csv', index=False)
